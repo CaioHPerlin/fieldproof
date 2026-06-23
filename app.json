@@ -32,7 +32,8 @@
         {
           "faceIDPermission": "Permitir que FieldProof use o Face ID."
         }
-      ]
+      ],
+      "expo-sqlite"
     ]
   }
 }

@@ -1,6 +1,8 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { SQLiteProvider } from "expo-sqlite";
 import { AuthProvider, useAuth } from "./context/auth";
+import { init } from "./database/database";
 import { InspectionDetailScreen } from "./screens/InspectionDetailScreen";
 import { InspectionListScreen } from "./screens/InspectionListScreen";
 import { LoginScreen } from "./screens/LoginScreen";
@@ -15,9 +17,11 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function App() {
   return (
-    <AuthProvider>
-      <InnerApp />
-    </AuthProvider>
+    <SQLiteProvider databaseName="app.db" onInit={init}>
+      <AuthProvider>
+        <InnerApp />
+      </AuthProvider>
+    </SQLiteProvider>
   );
 }
 
