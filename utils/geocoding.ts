@@ -1,6 +1,6 @@
 import * as Location from "expo-location";
 
-export type GeoLocation = {
+type GeoLocation = {
   address: string | null;
   latitude: number;
   longitude: number;
