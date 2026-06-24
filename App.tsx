@@ -10,7 +10,7 @@ import { LoginScreen } from "./screens/LoginScreen";
 export type RootStackParamList = {
   Login: undefined;
   Home: undefined;
-  Inspection: { inspectionId: string };
+  Inspection: { inspectionId: number };
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();

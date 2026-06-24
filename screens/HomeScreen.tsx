@@ -46,7 +46,7 @@ export function HomeScreen({ navigation }: Props) {
   const renderItem = ({ item }: { item: Inspection }) => (
     <View style={styles.item}>
       <TouchableOpacity
-        onPress={() => navigation.navigate("Inspection", { inspectionId: String(item.id) })}
+        onPress={() => navigation.navigate("Inspection", { inspectionId: item.id })}
         style={styles.itemTouch}
       >
         <Text style={styles.title}>{item.title}</Text>
