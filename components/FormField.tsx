@@ -1,5 +1,6 @@
 import { ComponentProps } from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
+import { colors, radius, spacing } from "../theme";
 
 type FormFieldProps = {
   label: string;
@@ -15,7 +16,12 @@ export function FormField({ label, style, ...rest }: FormFieldProps) {
 }
 
 const styles = StyleSheet.create({
-  wrapper: { marginBottom: 10 },
-  label: { fontSize: 14, fontWeight: "600", marginBottom: 4, color: "#333" },
-  input: { borderWidth: 1, borderColor: "#ccc", borderRadius: 4, padding: 8 },
+  wrapper: { marginBottom: spacing.sm },
+  label: { fontSize: 14, fontWeight: "600", marginBottom: spacing.xs, color: colors.text.primary },
+  input: {
+    borderWidth: 1,
+    borderColor: colors.border,
+    borderRadius: radius.sm,
+    padding: spacing.xs,
+  },
 });

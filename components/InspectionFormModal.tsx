@@ -1,10 +1,13 @@
 import { useSQLiteContext } from "expo-sqlite";
-import React, { useEffect, useState } from "react";
-import { Alert, Modal, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { useEffect, useState } from "react";
+import { Alert, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { insertInspection, updateInspection } from "../repositories/inspectionRepository";
+import { colors, radius, spacing } from "../theme";
 import { Inspection } from "../types/inspection";
+import { formatCoordinate } from "../utils/formatter";
 import { suggestCurrentAddress } from "../utils/geocoding";
 import { FormField } from "./FormField";
+import { Modal } from "./Modal";
 
 type Props = {
   visible: boolean;
@@ -91,81 +94,77 @@ export function InspectionFormModal({ visible, onClose, onInspectionCreated, ins
   };
 
   return (
-    <Modal visible={visible} transparent animationType="fade" onRequestClose={onClose}>
-      <View style={styles.overlay}>
-        <View style={styles.container}>
-          <Text style={styles.header}>{isEditing ? "Editar Inspeção" : "Nova Inspeção"}</Text>
+    <Modal visible={visible} onRequestClose={onClose} containerStyle={{ width: "90%" }}>
+      <Text style={styles.header}>{isEditing ? "Editar Inspeção" : "Nova Inspeção"}</Text>
 
-          <FormField
-            label="Nome do estabelecimento"
-            placeholder="Ex: Farmácia Central, Obra Rua XV"
-            value={title}
-            onChangeText={setTitle}
-            editable={!loadingLocation}
-          />
+      <FormField
+        label="Nome do estabelecimento"
+        placeholder="Ex: Farmácia Central, Obra Rua XV"
+        value={title}
+        onChangeText={setTitle}
+        editable={!loadingLocation}
+      />
 
-          <FormField
-            label="Endereço"
-            placeholder={loadingLocation ? "Obtendo localização..." : "Endereço"}
-            value={address}
-            onChangeText={setAddress}
-            editable={!loadingLocation}
-          />
+      <FormField
+        label="Endereço"
+        placeholder={loadingLocation ? "Obtendo localização..." : "Endereço"}
+        value={address}
+        onChangeText={setAddress}
+        editable={!loadingLocation}
+      />
 
-          {latitude != null && longitude != null && (
-            <Text style={styles.coords}>
-              📍 {latitude.toFixed(6)}, {longitude.toFixed(6)}
-            </Text>
-          )}
+      {latitude != null && longitude != null && (
+        <Text style={styles.coords}>
+          📍 {formatCoordinate(latitude)}, {formatCoordinate(longitude)}
+        </Text>
+      )}
 
-          <View style={styles.buttons}>
-            <TouchableOpacity
-              onPress={handleSave}
-              style={[styles.saveBtn, loadingLocation && styles.btnDisabled]}
-              disabled={loadingLocation}
-            >
-              <Text style={styles.btnText}>{isEditing ? "Atualizar" : "Salvar"}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={onClose} style={styles.cancelBtn}>
-              <Text style={styles.btnText}>Cancelar</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
+      <View style={styles.buttons}>
+        <TouchableOpacity
+          onPress={handleSave}
+          style={[styles.saveBtn, loadingLocation && styles.btnDisabled]}
+          disabled={loadingLocation}
+        >
+          <Text style={styles.btnText}>{isEditing ? "Atualizar" : "Salvar"}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={onClose} style={styles.cancelBtn}>
+          <Text style={styles.btnText}>Cancelar</Text>
+        </TouchableOpacity>
       </View>
     </Modal>
   );
 }
 
 const styles = StyleSheet.create({
-  overlay: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "rgba(0,0,0,0.5)",
+  header: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: colors.text.primary,
+    marginBottom: spacing.md,
   },
-  container: {
-    width: "90%",
-    backgroundColor: "#fff",
-    padding: 20,
-    borderRadius: 8,
+  coords: {
+    fontSize: 12,
+    color: colors.text.muted,
+    textAlign: "center",
+    marginBottom: spacing.md,
   },
-  header: { fontSize: 20, fontWeight: "bold", marginBottom: 12 },
-  coords: { fontSize: 12, color: "#888", textAlign: "center", marginBottom: 12 },
-  buttons: { flexDirection: "row", justifyContent: "space-between", marginTop: 4 },
+  buttons: { flexDirection: "row", justifyContent: "space-between", marginTop: spacing.xs },
   saveBtn: {
-    backgroundColor: "#4caf50",
-    padding: 10,
-    borderRadius: 4,
+    backgroundColor: colors.success,
+    padding: spacing.sm,
+    borderRadius: radius.sm,
     flex: 1,
-    marginRight: 5,
+    marginRight: spacing.xs,
+    alignItems: "center",
   },
   btnDisabled: { opacity: 0.5 },
   cancelBtn: {
-    backgroundColor: "#f44336",
-    padding: 10,
-    borderRadius: 4,
+    backgroundColor: colors.danger,
+    padding: spacing.sm,
+    borderRadius: radius.sm,
     flex: 1,
-    marginLeft: 5,
+    marginLeft: spacing.xs,
+    alignItems: "center",
   },
-  btnText: { color: "#fff", textAlign: "center" },
+  btnText: { color: colors.text.white, textAlign: "center" },
 });
