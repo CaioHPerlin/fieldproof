@@ -3,14 +3,14 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { SQLiteProvider } from "expo-sqlite";
 import { AuthProvider, useAuth } from "./context/auth";
 import { init } from "./database/database";
-import { InspectionDetailScreen } from "./screens/InspectionDetailScreen";
-import { InspectionListScreen } from "./screens/InspectionListScreen";
+import { HomeScreen } from "./screens/HomeScreen";
+import { InspectionScreen } from "./screens/InspectionScreen";
 import { LoginScreen } from "./screens/LoginScreen";
 
 export type RootStackParamList = {
   Login: undefined;
-  InspectionList: undefined;
-  InspectionDetail: { inspectionId: string };
+  Home: undefined;
+  Inspection: { inspectionId: string };
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -33,8 +33,8 @@ function InnerApp() {
       <Stack.Navigator>
         {isAuthenticated ? (
           <>
-            <Stack.Screen name="InspectionList" component={InspectionListScreen} />
-            <Stack.Screen name="InspectionDetail" component={InspectionDetailScreen} />
+            <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen name="Inspection" component={InspectionScreen} />
           </>
         ) : (
           <Stack.Screen name="Login" component={LoginScreen} />

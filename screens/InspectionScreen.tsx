@@ -2,9 +2,9 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Text, View } from "react-native";
 import { RootStackParamList } from "../App";
 
-type Props = NativeStackScreenProps<RootStackParamList, "InspectionDetail">;
+type Props = NativeStackScreenProps<RootStackParamList, "Inspection">;
 
-export function InspectionDetailScreen({ route }: Props) {
+export function InspectionScreen({ route }: Props) {
   const { inspectionId } = route.params;
 
   return (

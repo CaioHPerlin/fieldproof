@@ -3,9 +3,9 @@ import { Text, TouchableOpacity, View } from "react-native";
 import { RootStackParamList } from "../App";
 import { useAuth } from "../context/auth";
 
-type Props = NativeStackScreenProps<RootStackParamList, "InspectionList">;
+type Props = NativeStackScreenProps<RootStackParamList, "Home">;
 
-export function InspectionListScreen({ navigation }: Props) {
+export function HomeScreen({ navigation }: Props) {
   const { logout } = useAuth();
 
   return (
@@ -16,9 +16,7 @@ export function InspectionListScreen({ navigation }: Props) {
         <Text>Sair</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity
-        onPress={() => navigation.navigate("InspectionDetail", { inspectionId: "1" })}
-      >
+      <TouchableOpacity onPress={() => navigation.navigate("Inspection", { inspectionId: "1" })}>
         <Text>Detalhes da Inspeção 1</Text>
       </TouchableOpacity>
     </View>
