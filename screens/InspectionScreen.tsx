@@ -130,7 +130,7 @@ export function InspectionScreen({ navigation, route }: Props) {
 const styles = StyleSheet.create({
   container: { flex: 1, padding: spacing.sm, backgroundColor: colors.background },
   info: { backgroundColor: colors.surface, padding: spacing.md, marginBottom: spacing.sm },
-  infoText: { fontSize: 14, color: colors.text.secondary, marginTop: spacing.xs },
+  infoText: { fontSize: 14, color: colors.text.secondary, marginVertical: spacing.md },
   infoDate: { textAlign: "right", fontSize: 12, color: colors.text.muted, marginTop: spacing.xs },
   listContent: { paddingHorizontal: spacing.sm, paddingBottom: spacing.lg },
   attItem: {

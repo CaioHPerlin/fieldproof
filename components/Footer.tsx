@@ -11,7 +11,7 @@ interface FooterProps {
 export function Footer({ children, style }: FooterProps) {
   const insets = useSafeAreaInsets();
   return (
-    <View style={[styles.footer, { paddingBottom: Math.max(insets.bottom, spacing.sm) }, style]}>
+    <View style={[styles.footer, { paddingBottom: Math.max(insets.bottom, spacing.lg) }, style]}>
       {children}
     </View>
   );

@@ -10,7 +10,7 @@ export function FormField({ label, style, ...rest }: FormFieldProps) {
   return (
     <View style={styles.wrapper}>
       <Text style={styles.label}>{label}</Text>
-      <TextInput style={[styles.input, style]} {...rest} />
+      <TextInput style={[styles.input, style]} placeholderTextColor={colors.text.muted} {...rest} />
     </View>
   );
 }
