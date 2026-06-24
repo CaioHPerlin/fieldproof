@@ -21,7 +21,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const result = await LocalAuthentication.authenticateAsync({
       promptMessage: "Autentique-se para acessar o FieldProof",
       cancelLabel: "Cancelar",
-      disableDeviceFallback: true,
+      disableDeviceFallback: false, // Allow fallback to device passcode
     });
 
     setIsAuthenticated(result.success);

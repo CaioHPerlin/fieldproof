@@ -33,7 +33,7 @@ function InnerApp() {
       <Stack.Navigator>
         {isAuthenticated ? (
           <>
-            <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen name="Home" component={HomeScreen} options={{ title: "Inspeções" }} />
             <Stack.Screen name="Inspection" component={InspectionScreen} />
           </>
         ) : (

@@ -19,8 +19,14 @@ export async function insertInspection(
   inspection: NewInspectionInput,
 ): Promise<number> {
   const result = await db.runAsync(
-    "INSERT INTO inspections (title, location, date) VALUES (?, ?, ?)",
-    [inspection.title, inspection.location, inspection.date],
+    "INSERT INTO inspections (title, address, latitude, longitude, date) VALUES (?, ?, ?, ?, ?)",
+    [
+      inspection.title,
+      inspection.address,
+      inspection.latitude,
+      inspection.longitude,
+      inspection.date,
+    ],
   );
   return result.lastInsertRowId;
 }
@@ -31,14 +37,22 @@ export async function updateInspection(
   inspection: Partial<NewInspectionInput>,
 ): Promise<void> {
   const fields: string[] = [];
-  const values: (string | number)[] = [];
+  const values: (string | number | null)[] = [];
   if (inspection.title !== undefined) {
     fields.push("title = ?");
     values.push(inspection.title);
   }
-  if (inspection.location !== undefined) {
-    fields.push("location = ?");
-    values.push(inspection.location);
+  if (inspection.address !== undefined) {
+    fields.push("address = ?");
+    values.push(inspection.address);
+  }
+  if (inspection.latitude !== undefined) {
+    fields.push("latitude = ?");
+    values.push(inspection.latitude);
+  }
+  if (inspection.longitude !== undefined) {
+    fields.push("longitude = ?");
+    values.push(inspection.longitude);
   }
   if (inspection.date !== undefined) {
     fields.push("date = ?");

@@ -1,13 +1,19 @@
 import { SQLiteDatabase } from "expo-sqlite";
 
 export async function init(db: SQLiteDatabase): Promise<void> {
+  // await db.execAsync(`
+  //   DROP TABLE IF EXISTS inspections;
+  // `);
+
   await db.execAsync(`
     CREATE TABLE IF NOT EXISTS inspections (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      title TEXT NOT NULL,
-      location TEXT NOT NULL,
-      date TEXT NOT NULL
-    )
+      id          INTEGER PRIMARY KEY AUTOINCREMENT,
+      title       TEXT NOT NULL,     
+      address     TEXT NOT NULL,   
+      latitude    REAL,               
+      longitude   REAL,
+      date        TEXT NOT NULL
+    );
   `);
 
   await db.execAsync(`
@@ -20,6 +26,6 @@ export async function init(db: SQLiteDatabase): Promise<void> {
       longitude REAL,
       timestamp TEXT NOT NULL,
       FOREIGN KEY (inspectionId) REFERENCES inspections(id)
-    )
-    `);
+    );
+  `);
 }

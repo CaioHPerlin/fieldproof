@@ -1,7 +1,9 @@
 export type Inspection = {
   id: number;
   title: string;
-  location: string;
+  address: string;
+  latitude: number | null;
+  longitude: number | null;
   date: string;
 };
 
