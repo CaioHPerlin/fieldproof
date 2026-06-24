@@ -1,5 +1,8 @@
 # FieldProof
 
+> Trabalho desenvolvido individualmente.
+> Nome Completo: Caio Hygino Perlin de Lima, TADS 5
+
 Protótipo de aplicativo móvel desenvolvido com Expo/React Native como trabalho final da disciplina **Desenvolvimento e Aplicações para Dispositivos Móveis**, do curso de Tecnólogo em Análise e Desenvolvimento de Sistemas (IFMS).
 
 ---
