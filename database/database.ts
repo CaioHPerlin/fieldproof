@@ -2,7 +2,7 @@ import { SQLiteDatabase } from "expo-sqlite";
 
 export async function init(db: SQLiteDatabase): Promise<void> {
   // await db.execAsync(`
-  //   DROP TABLE IF EXISTS inspections;
+  //  DELETE FROM inspections;
   // `);
 
   await db.execAsync(`
@@ -25,7 +25,9 @@ export async function init(db: SQLiteDatabase): Promise<void> {
       latitude REAL,
       longitude REAL,
       timestamp TEXT NOT NULL,
-      FOREIGN KEY (inspectionId) REFERENCES inspections(id)
+      FOREIGN KEY (inspectionId)
+        REFERENCES inspections(id)
+        ON DELETE CASCADE
     );
   `);
 }

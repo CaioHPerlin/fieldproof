@@ -1,5 +1,6 @@
 import { Alert, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useAuth } from "../context/auth";
+import { colors, radius, spacing } from "../theme";
 
 export function LoginScreen() {
   const { authenticate } = useAuth();
@@ -27,14 +28,14 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#f5f5f5",
+    backgroundColor: colors.background,
   },
-  title: { fontSize: 32, fontWeight: "bold", marginBottom: 24, color: "#333" },
+  title: { fontSize: 32, fontWeight: "bold", marginBottom: spacing.lg, color: colors.text.primary },
   button: {
-    backgroundColor: "#007bff",
-    paddingHorizontal: 24,
-    paddingVertical: 12,
-    borderRadius: 8,
+    backgroundColor: colors.primary,
+    paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.md,
+    borderRadius: radius.lg,
   },
-  buttonText: { color: "#fff", fontSize: 16, fontWeight: "600" },
+  buttonText: { color: colors.text.white, fontSize: 16, fontWeight: "600" },
 });

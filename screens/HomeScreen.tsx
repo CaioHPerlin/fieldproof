@@ -2,12 +2,14 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useSQLiteContext } from "expo-sqlite";
 import { useEffect, useState } from "react";
 import { Alert, FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { RootStackParamList } from "../App";
+import { Footer, footerStyles } from "../components/Footer";
 import { InspectionFormModal } from "../components/InspectionFormModal";
 import { useAuth } from "../context/auth";
 import { deleteInspection, findAllInspections } from "../repositories/inspectionRepository";
+import { colors, radius, spacing } from "../theme";
 import { Inspection } from "../types/inspection";
+import { formatDate } from "../utils/formatter";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Home">;
 
@@ -17,7 +19,6 @@ export function HomeScreen({ navigation }: Props) {
   const [editingInspection, setEditingInspection] = useState<Inspection | null>(null);
 
   const { logout } = useAuth();
-  const insets = useSafeAreaInsets();
   const db = useSQLiteContext();
 
   async function fetchInspections() {
@@ -46,11 +47,11 @@ export function HomeScreen({ navigation }: Props) {
   const renderItem = ({ item }: { item: Inspection }) => (
     <View style={styles.item}>
       <TouchableOpacity
-        onPress={() => navigation.navigate("Inspection", { inspectionId: String(item.id) })}
+        onPress={() => navigation.navigate("Inspection", { inspectionId: item.id })}
         style={styles.itemTouch}
       >
         <Text style={styles.title}>{item.title}</Text>
-        <Text style={styles.subtitle}>{item.address}</Text>
+        <Text style={styles.subtitle}>{formatDate(item.date)}</Text>
       </TouchableOpacity>
       <View style={styles.actions}>
         <TouchableOpacity
@@ -78,20 +79,20 @@ export function HomeScreen({ navigation }: Props) {
         contentContainerStyle={styles.listContent}
         ListEmptyComponent={<Text style={styles.emptyText}>Nenhuma inspeção encontrada</Text>}
       />
-      <View style={[styles.footer, { paddingBottom: Math.max(insets.bottom, 8) }]}>
+      <Footer>
         <TouchableOpacity
-          style={styles.addBtn}
+          style={footerStyles.primary}
           onPress={() => {
             setEditingInspection(null);
             setIsModalVisible(true);
           }}
         >
-          <Text style={styles.addBtnText}>+ Nova Inspeção</Text>
+          <Text style={footerStyles.primaryText}>+ Nova Inspeção</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={logout} style={styles.logoutBtn}>
-          <Text style={styles.logoutText}>Sair</Text>
+        <TouchableOpacity onPress={logout} style={footerStyles.link}>
+          <Text style={[footerStyles.linkText, { color: colors.danger }]}>Sair</Text>
         </TouchableOpacity>
-      </View>
+      </Footer>
       <InspectionFormModal
         visible={isModalVisible}
         onClose={() => {
@@ -106,46 +107,35 @@ export function HomeScreen({ navigation }: Props) {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 10, backgroundColor: "#f9f9f9" },
+  container: { flex: 1, padding: spacing.md, backgroundColor: colors.background },
   listContent: { paddingBottom: 100 },
   item: {
-    backgroundColor: "#fff",
-    padding: 12,
-    marginBottom: 8,
-    borderRadius: 8,
+    backgroundColor: colors.surface,
+    padding: spacing.md,
+    marginBottom: spacing.sm,
+    borderRadius: radius.lg,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     elevation: 1,
   },
-  itemTouch: { flex: 1, marginRight: 8 },
-  title: { fontSize: 16, fontWeight: "600", marginBottom: 2 },
-  subtitle: { fontSize: 13, color: "#666" },
-  actions: { flexDirection: "row", gap: 6 },
+  itemTouch: { flex: 1, marginRight: spacing.sm },
+  title: { fontSize: 16, fontWeight: "600", marginBottom: spacing.xs },
+  subtitle: { fontSize: 13, color: colors.text.secondary },
+  actions: { flexDirection: "row", gap: spacing.xs },
   editBtn: {
-    backgroundColor: "#e3f2fd",
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 6,
+    backgroundColor: colors.primary,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm,
+    borderRadius: radius.md,
   },
-  editBtnText: { color: "#1976d2", fontWeight: "600", fontSize: 13 },
+  editBtnText: { color: colors.text.white, fontWeight: "600", fontSize: 13 },
   deleteBtn: {
-    backgroundColor: "#fce4ec",
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 6,
+    backgroundColor: colors.danger,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm,
+    borderRadius: radius.md,
   },
-  deleteBtnText: { color: "#d32f2f", fontWeight: "600", fontSize: 13 },
-  footer: { marginTop: "auto" },
-  addBtn: {
-    backgroundColor: "#28a745",
-    padding: 14,
-    borderRadius: 8,
-    alignItems: "center",
-    marginTop: 10,
-  },
-  addBtnText: { color: "#fff", fontWeight: "bold", fontSize: 16 },
-  logoutBtn: { marginTop: 10, alignItems: "center" },
-  logoutText: { color: "#dc3545", fontWeight: "600" },
-  emptyText: { textAlign: "center", marginTop: 20, color: "#666" },
+  deleteBtnText: { color: colors.text.white, fontWeight: "600", fontSize: 13 },
+  emptyText: { textAlign: "center", marginTop: spacing.lg, color: colors.text.secondary },
 });
