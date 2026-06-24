@@ -1,13 +1,6 @@
 import { SQLiteDatabase } from "expo-sqlite";
 import { Attachment, NewAttachmentInput } from "../types/attachment";
 
-export async function findAllAttachments(db: SQLiteDatabase): Promise<Attachment[]> {
-  const result = await db.getAllAsync<Attachment>(
-    "SELECT * FROM attachments ORDER BY timestamp DESC",
-  );
-  return result;
-}
-
 export async function findAttachmentsByInspectionId(
   db: SQLiteDatabase,
   inspectionId: number,
@@ -19,12 +12,15 @@ export async function findAttachmentsByInspectionId(
   return result;
 }
 
-export async function findAttachmentById(
+export async function countAttachmentsByInspectionId(
   db: SQLiteDatabase,
-  id: number,
-): Promise<Attachment | null> {
-  const result = await db.getFirstAsync<Attachment>("SELECT * FROM attachments WHERE id = ?", [id]);
-  return result ?? null;
+  inspectionId: number,
+): Promise<number> {
+  const result = await db.getFirstAsync<{ count: number }>(
+    "SELECT COUNT(*) AS count FROM attachments WHERE inspectionId = ?",
+    [inspectionId],
+  );
+  return result?.count ?? 0;
 }
 
 export async function insertAttachment(
