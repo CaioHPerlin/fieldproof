@@ -6,6 +6,7 @@ import { init } from "./database/database";
 import { HomeScreen } from "./screens/HomeScreen";
 import { InspectionScreen } from "./screens/InspectionScreen";
 import { LoginScreen } from "./screens/LoginScreen";
+import { colors } from "./theme";
 
 export type RootStackParamList = {
   Login: undefined;
@@ -30,7 +31,13 @@ function InnerApp() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator
+        screenOptions={{
+          headerStyle: { backgroundColor: colors.primary },
+          headerTintColor: colors.text.white,
+          headerTitleStyle: { fontWeight: "bold", fontSize: 18 },
+        }}
+      >
         {isAuthenticated ? (
           <>
             <Stack.Screen name="Home" component={HomeScreen} options={{ title: "Inspeções" }} />
